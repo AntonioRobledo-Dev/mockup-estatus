@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Producción - Órdenes</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #F8FAFC;       /* Gris muy claro para el fondo */
+            --bg-sidebar: #1E40AF;    /* Azul corporativo moderno */
+            --card-bg: #FFFFFF;       /* Blanco puro para tarjetas */
+            --text-primary: #334155;  /* Texto oscuro suave */
+            --text-secondary: #64748B;/* Texto grisáceo para fechas y pz */
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        #sidebar {
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            color: white;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+            z-index: 10;
+        }
+
+        .sidebar-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .sidebar-label {
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .sidebar-value {
+            background-color: white;
+            color: var(--text-primary);
+            padding: 0.6rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            border-radius: 4px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        #main-content {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-container {
+            width: 160px;
+            height: 160px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-qty {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card-dates {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-container { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            #sidebar { width: 100%; flex-direction: row; justify-content: center; gap: 3rem; padding: 1.5rem; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside id="sidebar">
+        <div class="sidebar-group">
+            <span class="sidebar-label">Orden producción:</span>
+            <div class="sidebar-value">1428</div>
+        </div>
+        <div class="sidebar-group">
+            <span class="sidebar-label">Piezas solicitadas:</span>
+            <div class="sidebar-value">5000</div>
+        </div>
+    </aside>
+
+    <main id="main-content">
+        <div class="grid-container">
+            
+            <!-- Fila 1 -->
+            <div class="card">
+                <div class="chart-container"><canvas id="chart-hojeado-1"></canvas></div>
+                <h3 class="card-title">HOJEADO</h3>
+                <div class="card-qty">5000 PZ</div>
+                <div class="card-dates">INICIO: 07/07/2026<br>TERMINO: 15/07/2026</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container"><canvas id="chart-impresion"></canvas></div>
+                <h3 class="card-title">IMPRESIÓN</h3>
+                <div class="card-qty">5000 PZ</div>
+                <div class="card-dates">INICIO: 15/07/2026<br>TERMINO: 18/07/2026</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container"><canvas id="chart-troquelado"></canvas></div>
+                <h3 class="card-title">TROQUELADO</h3>
+                <div class="card-qty">5000 PZ</div>
+                <div class="card-dates">INICIO: 18/07/2026<br>TERMINO: 22/07/2026</div>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="card">
+                <div class="chart-container"><canvas id="chart-hojeado-2"></canvas></div>
+                <h3 class="card-title">HOJEADO</h3>
+                <div class="card-qty">1750 PZ</div>
+                <div class="card-dates">INICIO: 22/07/2026<br>TERMINO: XX/XX/XXXX</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container"><canvas id="chart-hojeado-3"></canvas></div>
+                <h3 class="card-title">HOJEADO</h3>
+                <div class="card-qty">0 PZ</div>
+                <div class="card-dates">INICIO: XX/XX/XXXX<br>TERMINO: XX/XX/XXXX</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container"><canvas id="chart-hojeado-4"></canvas></div>
+                <h3 class="card-title">HOJEADO</h3>
+                <div class="card-qty">0 PZ</div>
+                <div class="card-dates">INICIO: XX/XX/XXXX<br>TERMINO: XX/XX/XXXX</div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // 1. Paleta de colores basada en nuestra propuesta de diseño UI
+        const colors = {
+            green: '#65A30D',   // Hojeado 100%
+            red: '#DC2626',     // Impresión 100%
+            blue: '#2563EB',    // Troquelado 100%
+            yellow: '#EAB308',  // Progreso parcial 25%
+            gray: '#E2E8F0',    // Fondo de dona y 0%
+            textDark: '#334155' // Texto general
+        };
+
+        // 2. Plugin personalizado para escribir el porcentaje justo en el centro de la dona
+        const centerTextPlugin = {
+            id: 'centerText',
+            beforeDraw: function(chart) {
+                let width = chart.width,
+                    height = chart.height,
+                    ctx = chart.ctx;
+
+                ctx.restore();
+                // Ajuste dinámico del tamaño de fuente según el tamaño del canvas
+                let fontSize = (height / 110).toFixed(2);
+                ctx.font = "bold " + fontSize + "em 'Inter', sans-serif";
+                ctx.textBaseline = "middle";
+
+                // Obtenemos el porcentaje y el color principal de los datos de la gráfica
+                let percent = chart.config.data.datasets[0].data[0];
+                let mainColor = chart.config.data.datasets[0].backgroundColor[0];
+                
+                let text = percent + "%",
+                    textX = Math.round((width - ctx.measureText(text).width) / 2),
+                    textY = height / 2;
+
+                // Aplicar el color de la gráfica al texto (como en el boceto)
+                ctx.fillStyle = mainColor === colors.gray ? colors.textDark : mainColor;
+
+                ctx.fillText(text, textX, textY);
+                ctx.save();
+            }
+        };
+
+        // 3. Función constructora para generar las gráficas fácilmente
+        function createDonutChart(canvasId, percent, color) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            // Si el porcentaje es 0, forzamos que el color principal sea gris
+            const activeColor = percent === 0 ? colors.gray : color;
+            const remainder = 100 - percent;
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [percent, remainder],
+                        backgroundColor: [activeColor, colors.gray],
+                        borderWidth: 0, // Sin bordes para un look más limpio
+                        hoverOffset: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '75%', // Esto define qué tan delgada es la dona
+                    plugins: {
+                        legend: { display: false }, // Ocultamos la leyenda por defecto
+                        tooltip: { enabled: false } // Ocultamos el hover porque el dato ya está en el centro
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                },
+                plugins: [centerTextPlugin] // Inyectamos nuestro plugin de texto
+            });
+        }
+
+        // 4. Inicialización de las gráficas copiando los datos de tu boceto original
+        window.onload = function() {
+            // Fila 1 (Terminados)
+            createDonutChart('chart-hojeado-1', 100, colors.green);
+            createDonutChart('chart-impresion', 100, colors.red);
+            createDonutChart('chart-troquelado', 100, colors.blue);
+            
+            // Fila 2 (En progreso / Sin iniciar)
+            createDonutChart('chart-hojeado-2', 25, colors.yellow);
+            createDonutChart('chart-hojeado-3', 0, colors.gray);
+            createDonutChart('chart-hojeado-4', 0, colors.gray);
+        };
+    </script>
+</body>
+</html>
