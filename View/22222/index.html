@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Orden 22222</title>
+
+    <link rel="stylesheet" href="../../style/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <aside id="sidebar">
+        <div class="sidebar-group">
+            <span class="sidebar-label">Orden producción:</span>
+            <div class="sidebar-value">22222</div>
+        </div>
+        <div class="sidebar-group">
+            <span class="sidebar-label">Piezas solicitadas:</span>
+            <div class="sidebar-value">350</div>
+        </div>
+    </aside>
+
+    <main id="main-content">
+        <div class="grid-container">
+            
+            <div class="card">
+                <div class="chart-container">
+                    <canvas class="donut-chart" data-percent="100" data-color="green"></canvas>
+                </div>
+                <h3 class="card-title">HOJEADO</h3>
+                <div class="card-qty">350 PZ</div>
+                <div class="card-dates">INICIO: 07/07/2026<br>TERMINO: 15/07/2026</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container">
+                    <canvas class="donut-chart" data-percent="30" data-color="yellow"></canvas>
+                </div>
+                <h3 class="card-title">IMPRESIÓN</h3>
+                <div class="card-qty">105 PZ</div>
+                <div class="card-dates">INICIO: 15/07/2026<br>TERMINO: -</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container">
+                    <canvas class="donut-chart" data-percent="0" data-color="red"></canvas>
+                </div>
+                <h3 class="card-title">TROQUELADO</h3>
+                <div class="card-qty">0 PZ</div>
+                <div class="card-dates">INICIO: -<br>TERMINO: -</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container">
+                    <canvas class="donut-chart" data-percent="0" data-color="blue"></canvas>
+                </div>
+                <h3 class="card-title">DESBARRE</h3>
+                <div class="card-qty">0 PZ</div>
+                <div class="card-dates">INICIO: - <br>TERMINO: -</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container">
+                    <canvas class="donut-chart" data-percent="0" data-color="orange"></canvas>
+                </div>
+                <h3 class="card-title">PEGADO</h3>
+                <div class="card-qty">0 PZ</div>
+                <div class="card-dates">INICIO: - <br>TERMINO: -</div>
+            </div>
+
+            <div class="card">
+                <div class="chart-container">
+                    <canvas class="donut-chart" data-percent="0" data-color="teal"></canvas>
+                </div>
+                <h3 class="card-title">VENTANEADO</h3>
+                <div class="card-qty">0 PZ</div>
+                <div class="card-dates">INICIO: - <br>TERMINO: -</div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../js/script.js"></script>
+</body>
+</html>
